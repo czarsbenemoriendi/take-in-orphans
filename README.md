@@ -1,71 +1,121 @@
-# take-in-orphans README
+# Take in Orphans - Rozszerzenie VS Code
 
-This is the README for your extension "take-in-orphans". After writing up a brief description, we recommend including the following sections.
+## 📝 Opis
 
-## Features
+"Take in Orphans" to rozszerzenie VS Code, które automatycznie wykrywa i naprawia sieroty typograficzne w tekście polskim, zastępując zwykłe spacje nietłukącymi się spacjami (`&nbsp;`) w odpowiednich miejscach.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## ✨ Funkcjonalności
 
-For example if there is an image subfolder under your extension project workspace:
+### Automatyczne wykrywanie sierot typograficznych:
+- **Spójniki jednoliterowe**: a, i, o, u, w, z
+- **Przyimki**: na, do, od, po, ze, we, za, przed, przez, bez, dla, oraz, ale, czy, gdy, jak, pod, nad, przy, lub
+- **Skróty**: np., tj., itp., itd., tzn., ok., ul., al., pl., dr., prof., mgr., inż.
+- **Liczby z jednostkami**: 25 °C, 10 km, 2 kg, etc.
+- **Inicjały**: Dr J. Kowalski, Prof. A. Nowak
 
-\!\[feature X\]\(images/feature-x.png\)
+### Wsparcie dla różnych formatów:
+- Zwykły tekst
+- HTML/XML
+- Markdown
+- JSX/TSX
+- Vue, Svelte
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## 🚀 Użycie
 
-## Requirements
+### Skrót klawiszowy:
+- **Windows/Linux**: `Ctrl + Shift + Space`
+- **macOS**: `Cmd + Shift + Space`
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Komenda z palety:
+1. Otwórz paletę komend (`Ctrl+Shift+P` / `Cmd+Shift+P`)
+2. Wpisz "Napraw sieroty typograficzne"
+3. Naciśnij Enter
 
-## Extension Settings
+### Zakres działania:
+- **Zaznaczony tekst**: Naprawia tylko zaznaczony fragment
+- **Brak zaznaczenia**: Naprawia cały dokument
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## 🛠️ Rozwój
 
-For example:
+### Wymagania:
+- Node.js 18+
+- npm 8+
+- VS Code 1.105.0+
 
-This extension contributes the following settings:
+### Instalacja zależności:
+```bash
+npm install
+```
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Kompilacja:
+```bash
+npm run compile
+```
 
-## Known Issues
+### Uruchomienie w trybie deweloperskim:
+```bash
+npm run watch
+```
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Następnie naciśnij `F5` aby uruchomić Extension Development Host.
 
-## Release Notes
+### Testowanie:
+```bash
+npm test
+```
 
-Users appreciate release notes as you update your extension.
+## 📁 Struktura projektu
 
-### 1.0.0
+```
+take-in-orphans/
+├── .vscode/
+│   ├── extensions.json         # Zalecane rozszerzenia
+│   ├── launch.json             # Konfiguracja debugowania
+│   ├── settings.json           # Ustawienia workspace
+│   └── tasks.json              # Zadania VS Code
+├── src/
+│   ├── test/
+│   │   ├── extension.test.ts   # Testy integracyjne rozszerzenia
+│   │   └── orphanDetector.test.ts # Testy jednostkowe logiki
+│   ├── extension.ts            # Główny plik rozszerzenia
+│   └── orphanDetector.ts       # Logika wykrywania sierot
+├── eslint.config.mjs          # Konfiguracja ESLint
+├── package.json               # Konfiguracja rozszerzenia i npm
+├── tsconfig.json              # Konfiguracja TypeScript
+└── webpack.config.js          # Konfiguracja Webpack
 
-Initial release of ...
+```
 
-### 1.0.1
+## 🔧 Konfiguracja
 
-Fixed issue #.
+Rozszerzenie nie wymaga dodatkowej konfiguracji i działa od razu po instalacji.
 
-### 1.1.0
+## 📖 Przykłady użycia
 
-Added features X, Y, and Z.
+### Przed:
+```
+To jest tekst z spójnikiem a potem dalszy tekst.
+Idę do sklepu na zakupy.
+Temperatura wynosi 25 °C.
+Dr J. Kowalski jest lekarzem.
+```
+
+### Po:
+```
+To jest tekst z spójnikiem a&nbsp;potem dalszy tekst.
+Idę do&nbsp;sklepu na&nbsp;zakupy.
+Temperatura wynosi 25&nbsp;°C.
+Dr&nbsp;J.&nbsp;Kowalski jest lekarzem.
+```
+
+## 🐛 Zgłaszanie błędów
+
+Jeśli znajdziesz błąd lub masz sugestię, utwórz issue w repozytorium projektu.
+
+## 📄 Licencja
+
+MIT License - zobacz plik LICENSE dla szczegółów.
 
 ---
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Miłego używania! 🎉**
