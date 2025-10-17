@@ -3,7 +3,7 @@ import tsParser from "@typescript-eslint/parser";
 
 export default [{
     files: ["**/*.ts"],
-}, {
+    ignores: ["dist/**", "node_modules/**"],
     plugins: {
         "@typescript-eslint": typescriptEslint,
     },
@@ -20,9 +20,16 @@ export default [{
             format: ["camelCase", "PascalCase"],
         }],
 
-        curly: "warn",
-        eqeqeq: "warn",
-        "no-throw-literal": "warn",
-        semi: "warn",
+        "operator-linebreak": ["error", "before", {
+            "overrides": {
+                "?": "before",
+                ":": "before"
+            }
+        }],
+        "multiline-ternary": ["error", "always-multiline"],
+
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": "warn"
     },
 }];
