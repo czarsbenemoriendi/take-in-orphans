@@ -4,6 +4,6 @@ All notable changes to the "take-in-orphans" extension will be documented in thi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
-
-- Initial release
+## [0.1.0]
+- Początkowa wersja rozszerzenia
+- Funkcja naprawiania sierot typograficznych w zaznaczonym tekście oraz w całym dokumencie
