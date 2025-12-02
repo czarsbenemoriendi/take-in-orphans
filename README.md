@@ -8,10 +8,9 @@
 
 ### Automatyczne wykrywanie sierot typograficznych:
 - **Spójniki jednoliterowe**: a, i, o, u, w, z
-- **Przyimki**: na, do, od, po, ze, we, za, przed, przez, bez, dla, oraz, ale, czy, gdy, jak, pod, nad, przy, lub
-- **Skróty**: np., tj., itp., itd., tzn., ok., ul., al., pl., dr., prof., mgr., inż.
-- **Liczby z jednostkami**: 25 °C, 10 km, 2 kg, etc.
-- **Inicjały**: Dr J. Kowalski, Prof. A. Nowak
+- **Przyimki**: na, do, od, po, ze, we, za
+- **Skróty**: np., tj., itp., itd., tzn., ok., ul., al., pl.
+- **Liczby z jednostkami**: 25 °C, 10 km, 2 kg, 100 zł, 500 ml, etc.
 
 ### Wsparcie dla różnych formatów:
 - Zwykły tekst
@@ -96,16 +95,16 @@ Rozszerzenie nie wymaga dodatkowej konfiguracji i działa od razu po instalacji.
 ```
 To jest tekst z spójnikiem a potem dalszy tekst.
 Idę do sklepu na zakupy.
-Temperatura wynosi 25 °C.
-Dr J. Kowalski jest lekarzem.
+Temperatura wynosi 25 °C i wszystko w porządku.
+Mamy np. 100 zł w kasie.
 ```
 
 ### Po:
 ```
 To jest tekst z spójnikiem a&nbsp;potem dalszy tekst.
 Idę do&nbsp;sklepu na&nbsp;zakupy.
-Temperatura wynosi 25&nbsp;°C.
-Dr&nbsp;J.&nbsp;Kowalski jest lekarzem.
+Temperatura wynosi 25&nbsp;°C i&nbsp;wszystko w&nbsp;porządku.
+Mamy np.&nbsp;100&nbsp;zł w&nbsp;kasie.
 ```
 
 ## 🐛 Zgłaszanie błędów
