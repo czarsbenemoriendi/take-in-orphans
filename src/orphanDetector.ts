@@ -1,62 +1,123 @@
+type HtmlSegments = {
+	type: "tag" | "text";
+	content: string;
+}[];
 
-/**
- * Unified patterns for Polish orphans with clear categorization
- */
+type FixOrphans = (originalText: string, fileExtension?: string) => string;
+
 const ORPHAN_PATTERNS = {
-	// Spójniki jednoliterowe
 	conjunctions: /\b([aiouvwzAIOUVWZ])\s+/g,
 
-	// Przyimki i słowa funkcyjne
-	prepositions: /\b(na|do|od|po|ze|we|za|przed|przez|bez|dla|oraz|ale|czy|gdy|jak|pod|nad|przy|lub)\s+/g,
+	prepositions: /\b(na|do|od|po|ze|we|za)\s+/g,
 
-	// Skróty z kropką (bez tytułów, które mają osobny wzorzec)
 	abbreviations: /\b(np|tj|itp|itd|tzn|ok|ul|al|pl)\.\s+/g,
 
-	// Tytuły z kropką lub bez
-	titles: /\b(Dr|Prof|Mgr|Inż|Pan|Pani)\.?\s+/g,
-
-	// Liczby z jednostkami
 	numbers: /\b(\d+)\s+(zł|gr|kg|g|m|cm|mm|km|l|ml|h|min|s|°C|%)/g,
+};
 
-	// Inicjały
-	initials: /\b([A-ZĄĆĘŁŃÓŚŹŻ])\.\s+([A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+)/g
+const applyOrphanFixes = (text: string): string => {
+	let result = text;
+
+		Object.values(ORPHAN_PATTERNS).forEach((pattern) => {
+		result = result.replace(pattern, (match) =>
+			match.replace(/\s+/g, "&nbsp;"),
+		);
+	});
+
+	return result;
+};
+
+const parseHtmlSegments = (html: string): HtmlSegments => {
+	const segments: HtmlSegments = [];
+	let currentPos = 0;
+	let i = 0;
+
+	while (i < html.length) {
+		if (html[i] === "<") {
+			if (i > currentPos) {
+				segments.push({
+					type: "text",
+					content: html.substring(currentPos, i),
+				});
+			}
+
+			let tagEnd = i + 1;
+			let inQuote = false;
+			let quoteChar = "";
+
+			while (tagEnd < html.length) {
+				const char = html[tagEnd];
+
+				if (
+					(char === '"' || char === "'")
+					&& html[tagEnd - 1] !== "\\"
+				) {
+					if (!inQuote) {
+						inQuote = true;
+						quoteChar = char;
+					} else if (char === quoteChar) {
+						inQuote = false;
+						quoteChar = "";
+					}
+				}
+
+				// End of tag (when not inside quotes)
+				if (char === ">" && !inQuote) {
+					tagEnd++;
+					break;
+				}
+
+				tagEnd++;
+			}
+
+			segments.push({
+				type: "tag",
+				content: html.substring(i, tagEnd),
+			});
+
+			currentPos = tagEnd;
+			i = tagEnd;
+		} else {
+			i++;
+		}
+	}
+
+	if (currentPos < html.length) {
+		segments.push({
+			type: "text",
+			content: html.substring(currentPos),
+		});
+	}
+
+	return segments;
 };
 
 /**
  * Orphan fixing function with direct replacement
  */
-type OrphanFixer = (originalText: string, fileExtension?: string) => string;
 
-export const fixOrphans: OrphanFixer = (originalText: string, fileExtension?: string): string => {
+export const fixOrphans: FixOrphans = (
+	originalText: string,
+	fileExtension?: string,
+): string => {
 	const isHtml = fileExtension
-		? ['html', 'htm', 'xml', 'jsx', 'tsx', 'vue', 'svelte'].includes(fileExtension.toLowerCase())
-		: originalText.includes('<') && originalText.includes('>');
+		? ["html", "htm", "xml", "jsx", "tsx", "vue", "svelte"].includes(
+				fileExtension.toLowerCase(),
+			)
+		: originalText.includes("<") && originalText.includes(">");
 
-	let result = originalText;
+	if (!isHtml) {
+		return applyOrphanFixes(originalText);
+	}
 
-	// Apply all patterns sequentially
-	Object.values(ORPHAN_PATTERNS).forEach(pattern => {
-		if (isHtml) {
-			result = result.replace(pattern, (match, ..._groups) => {
-				// Find the position of this match in the current result
-				const matchIndex = result.indexOf(match);
-				if (matchIndex === -1) {
-					return match;
-				}
+	const segments = parseHtmlSegments(originalText);
 
-				// Check if the space is followed by an HTML tag
-				const afterMatch = result.substring(matchIndex + match.length);
-				if (afterMatch.startsWith('<')) {
-					return match; // Don't replace if followed by HTML tag
-				}
-
-				return match.replace(/\s+/g, '&nbsp;');
-			});
-		} else {
-			// Simple replacement for non-HTML content
-			result = result.replace(pattern, match => match.replace(/\s+/g, '&nbsp;'));
-		}
-	});
-
-	return result;
+	return segments
+		.map((segment) => {
+			if (segment.type === "text") {
+				return applyOrphanFixes(segment.content);
+			}
+			return segment.content;
+		})
+		.join("");
 };
