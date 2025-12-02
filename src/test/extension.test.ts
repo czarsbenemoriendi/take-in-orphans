@@ -5,11 +5,11 @@ suite('Take in Orphans Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
 	test('Extension should be present', () => {
-		assert.ok(vscode.extensions.getExtension('undefined_publisher.take-in-orphans'));
+		assert.ok(vscode.extensions.getExtension('czarsbenemoriendi.take-in-orphans'));
 	});
 
 	test('Extension should activate', async () => {
-		const extension = vscode.extensions.getExtension('undefined_publisher.take-in-orphans');
+		const extension = vscode.extensions.getExtension('czarsbenemoriendi.take-in-orphans');
 		if (extension && !extension.isActive) {
 			await extension.activate();
 		}
