@@ -6,9 +6,9 @@ type HtmlSegments = {
 type FixOrphans = (originalText: string, fileExtension?: string) => string;
 
 const ORPHAN_PATTERNS = {
-	conjunctions: /\b([aiouvwzAIOUVWZ])\s+/g,
+	conjunctions: /(?<![<\w])([aiouvwzAIOUVWZ])\s+/g,
 
-	prepositions: /\b(na|do|od|po|ze|we|za)\s+/g,
+	prepositions: /(?<![<\w])(na|do|od|po|ze|we|za)\s+/g,
 
 	abbreviations: /\b(np|tj|itp|itd|tzn|ok|ul|al|pl)\.\s+/g,
 
@@ -18,7 +18,7 @@ const ORPHAN_PATTERNS = {
 const applyOrphanFixes = (text: string): string => {
 	let result = text;
 
-		Object.values(ORPHAN_PATTERNS).forEach((pattern) => {
+	Object.values(ORPHAN_PATTERNS).forEach((pattern) => {
 		result = result.replace(pattern, (match) =>
 			match.replace(/\s+/g, "&nbsp;"),
 		);

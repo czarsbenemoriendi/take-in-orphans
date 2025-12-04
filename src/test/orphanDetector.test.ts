@@ -191,6 +191,20 @@ suite('Orphan Detector Test Suite', () => {
 			assert.strictEqual(result, expected);
 		});
 
+		test('should not treat HTML tag names as conjunctions', () => {
+			const input = '<a href="/link">Text a link</a>';
+			const expected = '<a href="/link">Text a&nbsp;link</a>';
+			const result = fixOrphans(input, 'html');
+			assert.strictEqual(result, expected);
+		});
+
+		test('should not add nbsp after opening tag bracket', () => {
+			const input = '<a class="link">Tekst w elemencie</a>';
+			const expected = '<a class="link">Tekst w&nbsp;elemencie</a>';
+			const result = fixOrphans(input, 'html');
+			assert.strictEqual(result, expected);
+		});
+
 		test('should not add nbsp in class attributes', () => {
 			const input = '<div class="button w full">Tekst w elemencie</div>';
 			const expected = '<div class="button w full">Tekst w&nbsp;elemencie</div>';
