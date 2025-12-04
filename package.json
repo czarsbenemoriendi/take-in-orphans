@@ -12,7 +12,7 @@
   "license": "MIT",
   "displayName": "Take in Orphans",
   "description": "Automatycznie dodaje &nbsp; w miejscach wymagających niełamiących się spacji",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": {
     "vscode": "^1.105.0"
   },

@@ -4,6 +4,13 @@ All notable changes to the "take-in-orphans" extension will be documented in thi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.2.1] - 2025-12-04
+
+### Fixed
+- Fixed issue where `<a` pattern in HTML tags was incorrectly treated as conjunction
+- Improved pattern matching using negative lookbehind to prevent false positives in HTML tags
+- Added tests to verify HTML tag names are not confused with conjunctions
+
 ## [0.2.0] - 2025-12-02
 
 ### Added
